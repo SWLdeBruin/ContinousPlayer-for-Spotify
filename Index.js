@@ -2,7 +2,7 @@ const axios = require('axios');
 const express = require('express');
 const querystring = require('querystring');
 const { generateRandomString } = require("./features/GenerateRandomString");
-const { getAvailableDevices, refreshAccessToken, getCurrentlyPlaying, switchToDevice } = require("./features/SpotifyPlayer");
+const { getAvailableDevices, refreshAccessToken, getCurrentlyPlaying, switchToDevice, playFromPlaylist, setPlaybackShuffle, setRepeatMode } = require("./features/SpotifyPlayer");
 const app = express();
 const port = 3000;
 require('dotenv').config();
@@ -93,8 +93,6 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-
-
 const setCorrectDevice = async () => {
   console.log('Checking if user is listening to music', new Date().toLocaleString());
   const currentlyPlaying = await getCurrentlyPlaying(tokenData.access_token);
@@ -106,6 +104,9 @@ const setCorrectDevice = async () => {
   else {
     console.log('User is not listening to music, switching to standby device');
     await switchToDevice(tokenData.access_token, standbyDeviceId);
+    // await playFromPlaylist(tokenData.access_token);
+    // await setPlaybackShuffle(tokenData.access_token);
+    // await setRepeatMode(tokenData.access_token);
   }
 };
 

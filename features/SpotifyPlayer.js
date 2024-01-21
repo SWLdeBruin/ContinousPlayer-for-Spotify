@@ -50,6 +50,63 @@ const switchToDevice = async (accessToken, deviceId) => {
   return result.data;
 };
 
+const playFromPlaylist = async (accessToken) => {
+  const options = {
+    url: 'https://api.spotify.com/v1/me/player/play',
+    headers: {
+      'Authorization': 'Bearer ' + accessToken,
+      'Content-Type': 'application/json'
+    },
+    data: {
+      context_uri: "spotify:playlist:7vC5Giq2orb4OUDYImq6LD"
+    }
+  };
+
+  const result = await axios.put(options.url, options.data, {
+    headers: options.headers
+  });
+
+  return result.data;
+};
+
+const setRepeatMode = async (accessToken) => {
+  const options = {
+    url: 'https://api.spotify.com/v1/me/player/repeat',
+    headers: {
+      'Authorization': 'Bearer ' + accessToken,
+      'Content-Type': 'application/json'
+    },
+    data: {
+      state: 'context'
+    }
+  };
+
+  const result = await axios.put(options.url, options.data, {
+    headers: options.headers
+  });
+
+  return result.data;
+};
+
+const setPlaybackShuffle = async (accessToken) => {
+  const options = {
+    url: 'https://api.spotify.com/v1/me/player/shuffle',
+    headers: {
+      'Authorization': 'Bearer ' + accessToken,
+      'Content-Type': 'application/json'
+    },
+    data: {
+      state: true
+    }
+  };
+
+  const result = await axios.put(options.url, options.data, {
+    headers: options.headers
+  });
+
+  return result.data;
+};
+
 const refreshAccessToken = async (refreshToken, applicationIdentification) => {
   const options = {
     url: 'https://accounts.spotify.com/api/token',
@@ -70,4 +127,4 @@ const refreshAccessToken = async (refreshToken, applicationIdentification) => {
   return result.data;
 };
 
-module.exports = { getAvailableDevices, refreshAccessToken, getCurrentlyPlaying, switchToDevice };
+module.exports = { getAvailableDevices, refreshAccessToken, getCurrentlyPlaying, switchToDevice, playFromPlaylist, setPlaybackShuffle, setRepeatMode };
